@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mandala Drawer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="controls">
+    <div class="control-section">
+        <div class="control-item tooltip">
+            <label>1. Sections <span id="sectionsAsterisk"></span></label>
+            <input type="number" id="sections" min="1" max="50" value="4">
+            <span class="tooltiptext">Number of sections to divide the mandala.</span>
+        </div>
+    </div>
+    <div class="control-section">
+        <div class="control-item tooltip">
+            <label>2. Line Width <span id="lineWidthAsterisk"></span></label>
+            <input type="range" id="lineWidth" min="0.1" max="10" step="0.1" value="2">
+            <button id="randomizeLineWidth">R</button>
+            <button class="toggle-submenu">...</button>
+            <span class="tooltiptext">Adjust the width of the drawing line.</span>
+        </div>
+        <div class="submenu">
+            <div class="submenu-content">
+                <input type="checkbox" id="checkLineWidth">
+                <label>Min:</label>
+                <input type="number" id="lineWidthMin" min="0.1" max="10" step="0.1" value="0.1">
+                <label>Max:</label>
+                <input type="number" id="lineWidthMax" min="0.1" max="10" step="0.1" value="10">
+            </div>
+        </div>
+    </div>
+    <div class="control-section">
+        <div class="control-item tooltip">
+            <label>3. Line Color <span id="lineColorAsterisk"></span></label>
+            <input type="color" id="lineColor" value="#000000">
+            <button id="randomizeLineColor">R</button>
+            <span class="tooltiptext">Choose the color of the drawing line.</span>
+        </div>
+    </div>
+    <div class="control-section">
+        <div class="control-item tooltip">
+            <label>4. Fill <span id="fillAsterisk"></span></label>
+            <input type="checkbox" id="fill">
+            <button id="randomizeFill">R</button>
+            <span class="tooltiptext">Toggle fill for the sections.</span>
+        </div>
+    </div>
+    <div class="control-section">
+        <div class="control-item tooltip">
+            <label>5. Speed <span id="speedAsterisk"></span></label>
+            <input type="range" id="speedControl" min="0" max="50000" value="100">
+            <input type="number" id="speedNumber" min="0" max="50000" value="100">
+            <span class="tooltiptext">Adjust the drawing speed (0 to 50,000 ms).</span>
+        </div>
+    </div>
+    <div class="control-section">
+        <div class="control-item tooltip">
+            <label>6. Opacity <span id="opacityAsterisk"></span></label>
+            <input type="range" id="opacity" min="0" max="1" step="0.01" value="1">
+            <button id="randomizeOpacity">R</button>
+            <button class="toggle-submenu">...</button>
+            <span class="tooltiptext">Adjust the opacity of the drawing.</span>
+        </div>
+        <div class="submenu">
+            <div class="submenu-content">
+                <input type="checkbox" id="checkOpacity">
+                <label>Min:</label>
+                <input type="number" id="opacityMin" min="0" max="1" step="0.01" value="0">
+                <label>Max:</label>
+                <input type="number" id="opacityMax" min="0" max="1" step="0.01" value="1">
+            </div>
+        </div>
+    </div>
+    <div class="control-section">
+        <div class="control-item tooltip">
+            <label>7. Change Color <span id="changeColorAsterisk"></span></label>
+            <input type="checkbox" id="changeColor">
+            <button id="randomizeChangeColor">R</button>
+            <span class="tooltiptext">Toggle color transition between two colors.</span>
+        </div>
+    </div>
+    <div class="control-section">
+        <div class="control-item tooltip">
+            <label>8. Color 1 <span id="color1Asterisk"></span></label>
+            <input type="color" id="color1" value="#ff0000">
+            <button id="randomizeColor1">R</button>
+            <span class="tooltiptext">Select the first color for transition.</span>
+        </div>
+    </div>
+    <div class="control-section">
+        <div class="control-item tooltip">
+            <label>9. Color 2 <span id="color2Asterisk"></span></label>
+            <input type="color" id="color2" value="#0000ff">
+            <button id="randomizeColor2">R</button>
+            <span class="tooltiptext">Select the second color for transition.</span>
+        </div>
+    </div>
+    <div class="control-section">
+        <div class="control-item tooltip">
+            <label>10. Color Speed <span id="colorSpeedAsterisk"></span></label>
+            <input type="range" id="colorSpeed" min="0" max="50000" value="10">
+            <input type="number" id="colorSpeedNumber" min="0" max="50000" value="10">
+            <span class="tooltiptext">Adjust the speed of color transition (0 to 50,000 ms).</span>
+        </div>
+    </div>
+    <div class="control-section">
+        <div class="control-item tooltip">
+            <label>Draw Mode: </label>
+            <input type="radio" name="drawMode" value="straightLines" checked> Straight Lines
+            <input type="radio" name="drawMode" value="angledTurns"> Angled Turns
+            <input type="radio" name="drawMode" value="curvedTurns"> Curved Turns
+            <span class="tooltiptext">Select the drawing mode.</span>
+        </div>
+    </div>
+    <div class="control-section straightLinesSettings">
+        <div class="control-item tooltip">
+            <label>11. Line Length <span id="lineLengthAsterisk"></span></label>
+            <input type="range" id="lineLength" min="1" max="500" value="50">
+            <button id="randomizeLineLength">R</button>
+            <button class="toggle-submenu">...</button>
+            <span class="tooltiptext">Adjust the length of straight lines (1 to 500 px).</span>
+        </div>
+        <div class="submenu-content">
+            <input type="checkbox" id="checkLineLength">
+            <label>Min:</label>
+            <input type="number" id="lineLengthMin" min="1" max="500" value="1">
+            <label>Max:</label>
+            <input type="number" id="lineLengthMax" min="1" max="500" value="500">
+        </div>
+    </div>
+    <div class="control-section angledTurnsSettings" style="display: none;">
+        <div class="control-item tooltip">
+            <label>12. Turn Angle <span id="turnAngleAsterisk"></span></label>
+            <input type="range" id="turnAngle" min="0" max="360" value="45">
+            <button id="randomizeTurnAngle">R</button>
+            <button class="toggle-submenu">...</button>
+            <span class="tooltiptext">Adjust the angle of turns (0 to 360 degrees).</span>
+        </div>
+        <div class="submenu-content">
+            <input type="checkbox" id="checkTurnAngle">
+            <label>Min:</label>
+            <input type="number" id="turnAngleMin" min="0" max="360" value="0">
+            <label>Max:</label>
+            <input type="number" id="turnAngleMax" min="0" max="360" value="360">
+        </div>
+    </div>
+    <div class="control-section curvedTurnsSettings" style="display: none;">
+        <div class="control-item tooltip">
+            <label>13. Turn Radius <span id="turnRadiusAsterisk"></span></label>
+            <input type="range" id="turnRadius" min="0.5" max="100" step="0.1" value="10">
+            <button id="randomizeTurnRadius">R</button>
+            <button class="toggle-submenu">...</button>
+            <span class="tooltiptext">Adjust the radius of curved turns (0.5 mm to 10 cm).</span>
+        </div>
+        <div class="submenu-content">
+            <input type="checkbox" id="checkTurnRadius">
+            <label>Min:</label>
+            <input type="number" id="turnRadiusMin" min="0.5" max="100" step="0.1" value="0.5">
+            <label>Max:</label>
+            <input type="number" id="turnRadiusMax" min="0.5" max="100" step="0.1" value="100">
+        </div>
+    </div>
+    <div class="control-item">
+        <label>Mode: </label>
+        <input type="radio" name="autoDrawMode" value="manual" checked> Manual
+        <input type="radio" name="autoDrawMode" value="organizedRandom"> OrgRand
+        <input type="radio" name="autoDrawMode" value="totalChaos"> Chaos
+        <input type="radio" name="autoDrawMode" value="oneAtATime"> One at a Time
+    </div>
+    <button id="chooseRandom">Choose Random</button>
+    <button id="setRandom">Set Random</button>
+    <button id="clearRandom">Clear</button>
+    <button id="undo">Undo</button>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+</div>
+<div class="canvas-container">
+    <canvas id="mandalaCanvas" width="800" height="800"></canvas>
+</div>
+<script src="main.js"></script>
+</body>
+</html>

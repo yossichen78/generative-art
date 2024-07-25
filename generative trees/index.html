@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generative Art App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <div class="settings-pane">
+        <h2>Settings</h2>
+        <label for="color">Color:</label>
+        <input type="color" id="color" value="#000000">
+        <label for="lineWidth">Line Width:</label>
+        <input type="range" id="lineWidth" min="1" max="10" value="1">
+        <label for="branchSpeed">Branch Speed:</label>
+        <input type="range" id="branchSpeed" min="10" max="200" value="100">
+        <label for="branchProbability">Branch Probability:</label>
+        <input type="range" id="branchProbability" min="0.5" max="1.5" step="0.05" value="1">
+        <label for="division">Divisions:</label>
+        <input type="number" id="division" min="1" max="50" value="4">
+        <label for="bgColor">Background Color:</label>
+        <input type="color" id="bgColor" value="#ffffff">
+        <button id="randomize">Randomize</button>
+        <button id="reset">Reset</button>
+    </div>
+    <canvas id="artCanvas"></canvas>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
