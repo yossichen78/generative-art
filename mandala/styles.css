@@ -15,34 +15,14 @@ body {
     overflow-y: auto;
 }
 
-.controls > div {
+.control-section {
     margin-bottom: 10px;
 }
 
-.control-section {
+.control-item {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
-}
-
-.control-section label {
-    margin-bottom: 5px;
-}
-
-.submenu {
-    display: none;
-    flex-direction: column;
-    margin-top: 5px;
-    padding-left: 10px;
-    border-left: 2px solid #ddd;
-}
-
-.submenu input[type="number"] {
-    width: 50px;
-}
-
-.submenu label {
-    margin: 5px 0;
 }
 
 .canvas-container {
@@ -54,53 +34,4 @@ body {
 
 canvas {
     border: 1px solid black;
-    width: 800px;
-    height: 800px;
-}
-
-.control-item {
-    display: flex;
-    align-items: center;
-}
-
-.control-item label {
-    margin-right: 10px;
-}
-
-.control-item input[type="range"],
-.control-item input[type="color"],
-.control-item input[type="number"],
-.control-item input[type="checkbox"] {
-    margin-right: 10px;
-}
-
-.control-item button {
-    margin-right: 10px;
-}
-
-.tooltip {
-    position: relative;
-    display: inline-block;
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 200px;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -100px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
 }
