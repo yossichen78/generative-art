@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixelate Image</title>
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+        }
+        #controls {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 20px;
+            color: #fff;
+            background-color: #333;
+        }
+        #controls input, #controls label {
+            margin-bottom: 10px;
+        }
+        canvas {
+            border: 1px solid #fff;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="controls">
+    <label for="gridSizeSlider">Grid Size: <span id="gridSizeValue">10</span> px</label>
+    <input type="range" id="gridSizeSlider" min="2" max="20" value="10">
+
+    <label for="gridColorPicker">Grid Color:</label>
+    <input type="color" id="gridColorPicker" value="#ffffff">
+
+    <label for="gridLineWidthSlider">Grid Line Width: <span id="gridLineWidthValue">1</span> px</label>
+    <input type="range" id="gridLineWidthSlider" min="0" max="10" value="1">
+
+    <input type="file" id="fileInput" accept="image/*">
+</div>
+<canvas id="imageCanvas" width="800" height="800"></canvas>
+<script src="script.js"></script>
+</body>
+</html>
