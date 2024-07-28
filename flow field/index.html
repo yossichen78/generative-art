@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flow Field</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+</head>
+<body>
+<div id="controls">
+    <h3>Force Field Controls</h3>
+    <label for="force">Force:</label>
+    <input type="range" id="force" min="0" max="10" step="0.1">
+    <label for="density">Density:</label>
+    <input type="range" id="density" min="1" max="100" step="1">
+    <label for="noise">Noise:</label>
+    <input type="range" id="noise" min="0" max="1" step="0.01">
+    <label for="octaves">Octaves:</label>
+    <input type="number" id="octaves" min="1" max="8" step="1">
+    <button id="generate">Generate</button>
+    <button id="startChange">Gradual Change Start</button>
+    <button id="stopChange">Gradual Change Stop</button>
+
+    <h3>Particle Controls</h3>
+    <label for="gridSize">Grid Size:</label>
+    <input type="number" id="gridSize" min="1" max="100" step="1">
+    <label for="bgColor">Background Color:</label>
+    <input type="color" id="bgColor">
+    <label for="particleColor">Particle Color:</label>
+    <input type="color" id="particleColor">
+    <label for="particleCount">Particle Count:</label>
+    <input type="range" id="particleCount" min="1" max="5000" step="1">
+    <label for="particleSpeed">Particle Speed:</label>
+    <input type="number" id="particleSpeed" min="1" max="10" step="1">
+    <label for="particleOpacity">Particle Opacity:</label>
+    <input type="range" id="particleOpacity" min="0" max="255" step="1">
+    <label for="particleSize">Particle Size (px):</label>
+    <input type="number" id="particleSize" min="1" max="10" step="1">
+    <label for="smearEffect">Smear Effect:</label>
+    <input type="checkbox" id="smearEffect">
+    <label for="smearIntensity">Smear Intensity:</label>
+    <input type="range" id="smearIntensity" min="0" max="255" step="1">
+    <label for="particleLifetime">Particle Lifetime:</label>
+    <input type="number" id="particleLifetime" min="1" max="1000" step="1">
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    <button id="togglePoints">Toggle Points</button>
+    <button id="toggleVectors">Toggle Vectors</button>
+    <button id="toggleTrails">Toggle Trails</button>
+</div>
+<div id="canvas-container"></div>
+<script src="script.js"></script>
+</body>
+</html>

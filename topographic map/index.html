@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topographic Map with Controls</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .sidebar {
+            width: 250px;
+            margin-right: 20px;
+        }
+        .controls {
+            display: flex;
+            flex-direction: column;
+        }
+        .control-group {
+            margin-bottom: 20px;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+</head>
+<body>
+<div class="sidebar">
+    <div class="controls">
+        <div class="control-group">
+            <label>Color Palette:</label>
+            <div id="colorContainer">
+                <input type="color" class="colorPicker" value="#0000ff">
+                <input type="color" class="colorPicker" value="#00ff00">
+                <input type="color" class="colorPicker" value="#ffff00">
+            </div>
+            <button id="addColor">Add Color</button>
+            <button id="removeColor">Remove Last Color</button>
+            <button id="updateColors">Apply Colors</button>
+            <button id="randomizeColors">Randomize Colors</button>
+            <button id="resetColors">Reset Colors</button>
+        </div>
+        <div class="control-group">
+            <label>
+                <input type="checkbox" id="showLines"> Show Topographic Lines
+            </label>
+            <label>Line Distance:</label>
+            <input type="range" id="lineDistance" min="1" max="50" value="10" disabled>
+            <label>Line Width:</label>
+            <input type="range" id="lineWidth" min="1" max="10" value="2" disabled>
+            <label>Line Opacity:</label>
+            <input type="range" id="lineOpacity" min="0.1" max="1" step="0.1" value="1" disabled>
+            <label>Line Color:</label>
+            <input type="color" id="lineColor" value="#000000" disabled>
+        </div>
+        <div class="control-group">
+            <label>Noise Level:</label>
+            <input type="range" id="noiseLevel" min="0.001" max="0.1" step="0.001" value="0.005">
+        </div>
+        <div class="control-group">
+            <label>Scale:</label>
+            <input type="range" id="scale" min="1" max="20" value="5">
+        </div>
+        <div class="control-group">
+            <label>Speed:</label>
+            <input type="range" id="speed" min="0.001" max="0.1" step="0.001" value="0.009">
+        </div>
+        <div class="control-group">
+            <label>Contrast:</label>
+            <input type="range" id="contrast" min="0.5" max="2" step="0.1" value="1">
+        </div>
+        <div class="control-group">
+            <label>Topography Strength:</label>
+            <input type="range" id="strength" min="0.5" max="2" step="0.1" value="1">
+        </div>
+        <div class="control-group">
+            <label>Detail Level:</label>
+            <input type="range" id="detail" min="0.001" max="0.1" step="0.001" value="0.005">
+        </div>
+        <div class="control-group">
+            <button id="freezeButton">Freeze</button>
+        </div>
+    </div>
+</div>
+<canvas id="topoCanvas" width="1600" height="1200"></canvas>
+<script src="topoMap.js"></script>
+</body>
+</html>
