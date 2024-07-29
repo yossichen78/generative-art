@@ -56,6 +56,15 @@ Create complex patterns by dividing shapes into smaller parts. Customize the div
 
 [Divided Shapes](https://yossichen78.github.io/generative-art/divided%20shapes/index.html)
 
+### 6. Image to pixels
+Upload a picture and animate it to a grid.
+
+<a href="./images/imageup1.png">
+<img src="./images/imageup1.png" alt="Topographic Map Example 1" width="200"/>
+</a>
+
+[Image To Pixels](https://yossichen78.github.io/generative-art/dynamic%20quilt/index.html)
+
 ## Usage
 
 Each tool provides a unique interface with controls that allow you to customize various parameters. Simply visit the link of the tool you are interested in and start experimenting with the controls to create your own generative art.
