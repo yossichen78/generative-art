@@ -28,38 +28,35 @@
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ccapture.js@1.1.9/build/CCapture.all.min.js"></script>
 </head>
 <body>
 <div id="controls">
+    <button id="cameraButton">Use Camera</button>
+    <button id="imageButton">Upload Image</button>
     <label for="gridSizeSlider">Grid Size: <span id="gridSizeValue">10</span> px</label>
-    <input type="range" id="gridSizeSlider" min="2" max="20" value="10">
-    <label for="sizeDifferenceSlider">Size Difference:</label>
+    <input type="range" id="gridSizeSlider" min="2" max="40" value="10">
+    <label for="sizeDifferenceSlider">Size Difference: <span id="sizeDifferenceValue">10</span></label>
     <input type="range" id="sizeDifferenceSlider" min="0" max="40" value="10">
-    <span id="sizeDifferenceValue">10</span>
-
     <label for="gridColorPicker">Grid Color:</label>
     <input type="color" id="gridColorPicker" value="#ffffff">
-
     <label for="gridLineWidthSlider">Grid Line Width: <span id="gridLineWidthValue">1</span> px</label>
     <input type="range" id="gridLineWidthSlider" min="0" max="10" value="1">
-
-    <label for="noiseScaleSlider">Noise Scale: <span id="noiseScaleValue">0.1</span></label>
-    <input type="range" id="noiseScaleSlider" min="0.01" max="1" step="0.01" value="0.1">
-
+    <label for="noiseScaleSlider">Noise Scale: <span id="noiseScaleValue">0.01</span></label>
+    <input type="range" id="noiseScaleSlider" min="0.0" max="0.01" step="0.0001" value="0.001">
     <label for="noiseStrengthSlider">Noise Strength: <span id="noiseStrengthValue">10</span></label>
     <input type="range" id="noiseStrengthSlider" min="1" max="100" value="10">
-
     <label for="speedSlider">Speed: <span id="speedValue">0.01</span></label>
     <input type="range" id="speedSlider" min="0.001" max="0.1" step="0.001" value="0.01">
-
     <label for="showVectorFieldToggle">Show Vector Field</label>
     <input type="checkbox" id="showVectorFieldToggle">
-
     <label for="startStopToggle">Start/Stop Animation</label>
     <input type="checkbox" id="startStopToggle">
-
+    <label for="stretchShapesToggle">Stretch Shapes</label>
+    <input type="checkbox" id="stretchShapesToggle">
+    <button id="startRecordingButton">Start Recording</button>
+    <button id="stopRecordingButton" disabled>Stop Recording</button>
     <input type="file" id="fileInput" accept="image/*">
-
     <label for="shapeTypePicker">Shape Type:</label>
     <select id="shapeTypePicker">
         <option value="square">Square</option>
@@ -68,7 +65,6 @@
         <option value="polygon">Random Polygon</option>
     </select>
     <span id="shapeTypeValue">square</span>
-
 </div>
 <div id="canvasContainer"></div>
 <script src="script.js"></script>

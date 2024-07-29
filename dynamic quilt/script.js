@@ -1,4 +1,6 @@
 let img;
+let video;
+let useCamera = false;
 let gridSize = 10;
 let gridColor = '#ffffff';
 let gridLineWidth = 1;
@@ -7,6 +9,7 @@ let noiseStrength = 10;
 let speed = 0.01;
 let showVectorField = false;
 let animationRunning = false;
+let stretchShapes = false;
 let time = 0;
 let gravity = 0.5;
 let shapeType = 'square'; // Shape type for divided pixels
@@ -17,6 +20,7 @@ let precomputedColors = [];
 let shapeSizes = []; // Store sizes of shapes
 let fallingPixels = [];
 let fallenPixels = [];
+let capturer;
 
 function setup() {
     const canvas = createCanvas(800, 800);
@@ -30,9 +34,31 @@ function setup() {
     select('#speedSlider').input(updateSettings);
     select('#showVectorFieldToggle').changed(toggleVectorField);
     select('#startStopToggle').changed(toggleAnimation);
+    select('#stretchShapesToggle').changed(toggleStretchShapes);
     select('#fileInput').changed(handleFile);
     select('#shapeTypePicker').changed(updateSettings);
     select('#sizeDifferenceSlider').input(updateSettings);
+
+    select('#cameraButton').mousePressed(() => {
+        useCamera = true;
+        if (!video) {
+            video = createCapture(VIDEO);
+            video.size(800, 800);
+            video.hide();
+        }
+    });
+
+    select('#imageButton').mousePressed(() => {
+        useCamera = false;
+        if (video) {
+            video.remove();
+            video = null;
+        }
+        select('#fileInput').elt.click();
+    });
+
+    select('#startRecordingButton').mousePressed(startRecording);
+    select('#stopRecordingButton').mousePressed(stopRecording);
 
     loadSettings();
     noLoop();
@@ -51,12 +77,26 @@ function draw() {
     if (animationRunning) {
         time += speed;
     }
+
+    if (useCamera && video) {
+        video.loadPixels();
+        if (video.pixels.length > 0) {
+            precomputeColorsFromVideo();
+        }
+    } else if (img) {
+        precomputeColorsFromImage();
+    }
+
     drawGrid();
     drawFallingPixels();
     if (showVectorField) {
         drawVectorField();
     }
     applyGravity();
+
+    if (capturer) {
+        capturer.capture(canvas);
+    }
 }
 
 function drawGrid() {
@@ -72,6 +112,10 @@ function drawGrid() {
             let xOffset = cos(angle) * wave;
             let yOffset = sin(angle) * wave;
 
+            if (!precomputedColors[Math.floor(y / gridSize)] || !precomputedColors[Math.floor(y / gridSize)][Math.floor(x / gridSize)]) {
+                continue;
+            }
+
             let col = precomputedColors[Math.floor(y / gridSize)][Math.floor(x / gridSize)];
             let index = (y / gridSize) * (width / gridSize) + (x / gridSize);
 
@@ -83,7 +127,11 @@ function drawGrid() {
             fill(col);
             noStroke();
 
-            drawShape(x + xOffset, y + yOffset, size, shapeType);
+            if (stretchShapes && !fallenPixel) {
+                drawShape(x, y, size * 1.5, shapeType); // Stretch shapes
+            } else {
+                drawShape(x + xOffset, y + yOffset, size, shapeType);
+            }
 
             if (gridLineWidth > 0) {
                 stroke(gridColor);
@@ -134,7 +182,7 @@ function handleFile(event) {
         loadImage(e.target.result, (loadedImg) => {
             img = loadedImg;
             img.resize(800, 800);
-            precomputeColors();
+            useCamera = false;
             shapeSizes = []; // Reset shape sizes to recalculate with the new size difference
             redraw();
         });
@@ -142,13 +190,26 @@ function handleFile(event) {
     reader.readAsDataURL(file);
 }
 
-function precomputeColors() {
+function precomputeColorsFromImage() {
     precomputedColors = [];
     img.loadPixels();
     for (let y = 0; y < height; y += gridSize) {
         let row = [];
         for (let x = 0; x < width; x += gridSize) {
             let col = img.get(x, y);
+            row.push(col);
+        }
+        precomputedColors.push(row);
+    }
+}
+
+function precomputeColorsFromVideo() {
+    precomputedColors = [];
+    for (let y = 0; y < height; y += gridSize) {
+        let row = [];
+        for (let x = 0; x < width; x += gridSize) {
+            let index = (y * width + x) * 4;
+            let col = [video.pixels[index], video.pixels[index + 1], video.pixels[index + 2], video.pixels[index + 3]];
             row.push(col);
         }
         precomputedColors.push(row);
@@ -337,7 +398,11 @@ function updateSettings() {
 
     saveSettings();
     shapeSizes = []; // Reset shape sizes to recalculate with the new size difference
-    precomputeColors();
+    if (useCamera && video) {
+        precomputeColorsFromVideo();
+    } else if (img) {
+        precomputeColorsFromImage();
+    }
     redraw();
 }
 
@@ -353,6 +418,11 @@ function toggleAnimation() {
     } else {
         noLoop();
     }
+}
+
+function toggleStretchShapes() {
+    stretchShapes = select('#stretchShapesToggle').checked();
+    redraw();
 }
 
 function saveSettings() {
@@ -429,4 +499,19 @@ function generateRandomPolygon() {
     for (let i = 0; i < sides; i++) {
         randomPolygon.push({ x: cos(i * angle), y: sin(i * angle) });
     }
+}
+
+function startRecording() {
+    capturer = new CCapture({ format: 'webm' });
+    capturer.start();
+    select('#startRecordingButton').attribute('disabled', true);
+    select('#stopRecordingButton').removeAttribute('disabled');
+}
+
+function stopRecording() {
+    capturer.stop();
+    capturer.save();
+    capturer = null;
+    select('#stopRecordingButton').attribute('disabled', true);
+    select('#startRecordingButton').removeAttribute('disabled');
 }

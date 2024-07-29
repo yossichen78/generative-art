@@ -8,6 +8,7 @@ let smearEffect = false;
 let smearIntensity = 50;
 let particleCount;
 let gradualChange = false;
+let continuousGeneration = false;
 let controls = {
     gridSize: parseInt(localStorage.getItem('gridSize')) || 20,
     bgColor: localStorage.getItem('bgColor') || '#000000',
@@ -22,7 +23,8 @@ let controls = {
     density: parseInt(localStorage.getItem('density')) || 20,
     noise: parseFloat(localStorage.getItem('noise')) || 0.1,
     octaves: parseInt(localStorage.getItem('octaves')) || 4,
-    particleLifetime: parseInt(localStorage.getItem('particleLifetime')) || 100
+    particleLifetime: parseInt(localStorage.getItem('particleLifetime')) || 100,
+    continuousGeneration: localStorage.getItem('continuousGeneration') === 'true'
 };
 
 function setup() {
@@ -44,6 +46,7 @@ function setup() {
     noiseFactor = controls.noise;
     octaves = controls.octaves;
     particleLifetime = controls.particleLifetime;
+    continuousGeneration = controls.continuousGeneration;
     generateFlowField();
     initParticles(particleCount);
     noLoop();
@@ -151,7 +154,8 @@ function draw() {
 
     if (gradualChange) {
         for (let i = 0; i < flowField.length; i++) {
-            flowField[i].rotate(0.01);
+            let change = noise(i * noiseFactor) * 0.1 - 0.05;
+            flowField[i].rotate(change);
         }
     }
 
@@ -191,10 +195,14 @@ function draw() {
             }
         }
     }
+
+    if (continuousGeneration) {
+        initParticles(1);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('generate').addEventListener('click', () => {
+    const updateFlowField = () => {
         density = parseInt(document.getElementById('density').value);
         force = parseFloat(document.getElementById('force').value);
         noiseFactor = parseFloat(document.getElementById('noise').value);
@@ -210,14 +218,15 @@ document.addEventListener('DOMContentLoaded', () => {
         cols = Math.floor(width / density);
         rows = Math.floor(height / density);
         generateFlowField();
-    });
+    };
 
-    document.getElementById('startChange').addEventListener('click', () => {
-        gradualChange = true;
-    });
+    document.getElementById('force').addEventListener('input', updateFlowField);
+    document.getElementById('density').addEventListener('input', updateFlowField);
+    document.getElementById('noise').addEventListener('input', updateFlowField);
+    document.getElementById('octaves').addEventListener('input', updateFlowField);
 
-    document.getElementById('stopChange').addEventListener('click', () => {
-        gradualChange = false;
+    document.getElementById('toggleChange').addEventListener('click', () => {
+        gradualChange = !gradualChange;
     });
 
     document.getElementById('start').addEventListener('click', () => {
@@ -251,7 +260,6 @@ document.addEventListener('DOMContentLoaded', () => {
         particleSpeed = parseInt(event.target.value);
         localStorage.setItem('particleSpeed', particleSpeed);
         controls.particleSpeed = particleSpeed;
-        initParticles(particleCount);
     });
 
     document.getElementById('particleOpacity').addEventListener('input', (event) => {
@@ -284,6 +292,12 @@ document.addEventListener('DOMContentLoaded', () => {
         controls.smearIntensity = smearIntensity;
     });
 
+    document.getElementById('continuousGeneration').addEventListener('change', (event) => {
+        continuousGeneration = event.target.checked;
+        localStorage.setItem('continuousGeneration', continuousGeneration);
+        controls.continuousGeneration = continuousGeneration;
+    });
+
     document.getElementById('togglePoints').addEventListener('click', () => {
         showPoints = !showPoints;
     });
@@ -311,6 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('noise').value = controls.noise;
     document.getElementById('octaves').value = controls.octaves;
     document.getElementById('particleLifetime').value = controls.particleLifetime;
+    document.getElementById('continuousGeneration').checked = controls.continuousGeneration;
     gridSize = parseInt(controls.gridSize);
     bgColor = controls.bgColor;
     particleColor = controls.particleColor;
@@ -325,6 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
     noiseFactor = parseFloat(controls.noise);
     octaves = parseInt(controls.octaves);
     particleLifetime = parseInt(controls.particleLifetime);
+    continuousGeneration = controls.continuousGeneration;
     setup();
 });
 
